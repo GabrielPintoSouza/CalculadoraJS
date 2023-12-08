@@ -1,0 +1,56 @@
+/*Configurações do cabeçalho */
+header{
+    text-align: center;
+}
+
+/*Posicionamento da calculadora*/
+.calculadora{
+    margin:auto;
+    width: 25%;
+}
+
+/*Configurações do teclado*/
+.teclado{
+    text-align: center;
+}
+
+.numeros{
+    list-style-type: none;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0;
+}
+
+.numeros li{
+    margin: 5px;
+    text-align: center;
+}
+
+.numeros li:nth-child(10){
+    grid-column: 2;
+}
+
+.operacoes{
+    list-style-type: none;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0;
+}
+
+.operacoes li{
+    margin: 5px;
+    text-align: center;
+}
+/*Configurações do visor*/
+
+.resultado{
+    text-align: right;
+}
+
+/*Configurações do botão de calcular*/
+
+
+/*Configurações do rodapé*/
+footer{
+    text-align: center;
+}
