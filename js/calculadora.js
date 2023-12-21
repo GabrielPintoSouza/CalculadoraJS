@@ -7,23 +7,53 @@ const operacoes = document.querySelectorAll('.operacoes li');
 const btLimpar = document.getElementById('limparResultado');
 const btResultado = document.getElementById('exibirResultado');
 
-for(const algarismo of algarismos){
+for (const algarismo of algarismos) {
     algarismo.addEventListener('click', (ev) => {
-        termo += ev.target.textContent
+        termo += ev.target.textContent;
         exibirResultado(termo);
     })
 }
 
-btLimpar.addEventListener('click', limpeza);
+for (const operador of operacoes) {
+    operador.addEventListener('click', (ev) => {
+        if (operando == '' && resultado == 0) {
+            operando = ev.target.textContent;
+            resultado = Number(termo);
+            termo = '';
+            // console.log(operando);
+            // console.log(resultado);
+            // console.log(termo);
+        }else if(operando == '' && resultado !=0){
+            //console.log('testando');
+            operando = ev.target.textContent;
+        }else{
+            calcularExpressao();
+            operando = ev.target.textContent;
+            termo = '';
+        }
+    })
+}
+
 btLimpar.addEventListener('dblclick', limpezaProdunda);
+btLimpar.addEventListener('click', limpeza);
+
+
+btResultado.addEventListener('click', () => {
+    calcularExpressao();
+    termo = '';
+    operando = '';
+    //console.log(operando);
+    //console.log(resultado);
+
+});
 
 /**
  * função que pega o valor da variável resultado ou o equivalente passado e atribuí ao parágrafo com a classe resultado.
  */
-function exibirResultado(valor){
-    if(!valor){
+function exibirResultado(valor) {
+    if (!valor) {
         document.querySelector('.resultado').innerHTML = resultado;
-    }else{
+    } else {
         document.querySelector('.resultado').innerHTML = valor;
     }
     /*let conteudo = document.querySelector('.resultado').textContent;
@@ -33,19 +63,55 @@ function exibirResultado(valor){
 /**
  * Realiza a limpeza do visor e do termo
  */
-function limpeza(){
+function limpeza() {
     termo = '';
     exibirResultado(0);
+    //console.log("limpeza simples");
 }
 
 /**
  * Realiza a limpeza do visor, termo, operando e do resultado.
  */
-function limpezaProdunda(){
+function limpezaProdunda() {
     termo = '';
     operando = '';
     resultado = 0;
-    exibirResultado(0);
+    exibirResultado();
+    //console.log("limpeza profunda");
+}
+
+/**
+ * Usa as informações presentes no termo, resultado e operando para realizar o cálculo solicitado.
+ */
+function calcularExpressao() {
+    switch (operando) {
+        case '+': resultado += Number(termo);
+            break;
+
+        case '-': resultado -= Number(termo);
+            break;
+
+        case '*': resultado *= Number(termo);
+            break;
+
+        case '/': resultado /= Number(termo);
+            break;
+
+        default:
+            break;
+    }
+
+    exibirResultado(resultado);
+}
+
+/**
+ * Cria uma li para ser exibida no rodapé da página
+ * @param {*} termo1 resultado antes de ser modificado
+ * @param {*} termo2 termo
+ * @param {*} operador operando
+ */
+function registraCalculoNoHistorico(termo1, termo2, operador){
+
 }
 
 exibirResultado();
