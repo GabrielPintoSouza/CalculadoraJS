@@ -27,7 +27,13 @@ for (const operador of operacoes) {
             //console.log('testando');
             operando = ev.target.textContent;
         }else{
+            let termo1 = resultado;
+
             calcularExpressao();
+            if(termo !=''){
+                registraCalculoNoHistorico(termo1, termo, operando);
+            }
+            
             operando = ev.target.textContent;
             termo = '';
         }
@@ -39,7 +45,11 @@ btLimpar.addEventListener('click', limpeza);
 
 
 btResultado.addEventListener('click', () => {
+    let termo1 = resultado;
+
     calcularExpressao();
+    registraCalculoNoHistorico(termo1, termo, operando);
+
     termo = '';
     operando = '';
     //console.log(operando);
@@ -111,7 +121,12 @@ function calcularExpressao() {
  * @param {*} operador operando
  */
 function registraCalculoNoHistorico(termo1, termo2, operador){
+    const historico = document.querySelector('.historico');
+    const li = document.createElement('li');
 
+    li.textContent = `${termo1} ${operador} ${termo2} = ${resultado}`;
+
+    historico.insertBefore(li, historico.firstChild);
 }
 
 exibirResultado();

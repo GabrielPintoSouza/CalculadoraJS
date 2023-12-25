@@ -89,3 +89,18 @@ header{
 footer{
     text-align: center;
 }
+
+.historico{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.historico li{
+    margin: auto;
+    border-bottom: 1px solid #ccc;
+    width: 25%;
+}
+
+.historico li:nth-child(even){
+    background-color: #f2f2f2;
+}
