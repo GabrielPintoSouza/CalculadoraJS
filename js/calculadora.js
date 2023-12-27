@@ -95,16 +95,24 @@ function limpezaProdunda() {
  */
 function calcularExpressao() {
     switch (operando) {
-        case '+': resultado += Number(termo);
+        case '+': 
+            resultado += Number(termo);
+            resultado = Number(resultado.toFixed(10));//Limitação da quantidade de casas decimais calculadas
             break;
 
-        case '-': resultado -= Number(termo);
+        case '-': 
+            resultado -= Number(termo);
+            resultado = Number(resultado.toFixed(10));
             break;
 
-        case '*': resultado *= Number(termo);
+        case '*': 
+            resultado *= Number(termo);
+            resultado = Number(resultado.toFixed(10));
             break;
 
-        case '/': resultado /= Number(termo);
+        case '/': 
+            resultado /= Number(termo);
+            resultado = Number(resultado.toFixed(10));
             break;
 
         default:
