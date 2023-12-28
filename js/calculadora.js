@@ -10,7 +10,7 @@ const btResultado = document.getElementById('exibirResultado');
 for (const algarismo of algarismos) {
     algarismo.addEventListener('click', (ev) => {
         termo += ev.target.textContent;
-        exibirResultado(termo);
+        exibirNoVisor(termo);
     })
 }
 
@@ -23,17 +23,19 @@ for (const operador of operacoes) {
             // console.log(operando);
             // console.log(resultado);
             // console.log(termo);
-        }else if(operando == '' && resultado !=0){
+        } else if (operando == '' && resultado != 0) {
             //console.log('testando');
             operando = ev.target.textContent;
-        }else{
+        } else if (operando == '*' && termo == '' && ev.target.textContent == '-') {
+            termo = '-';
+        }else {
             let termo1 = resultado;
 
-            calcularExpressao();
-            if(termo !=''){
+            if (termo != '') {
+                calcularExpressao();
                 registraCalculoNoHistorico(termo1, termo, operando);
             }
-            
+
             operando = ev.target.textContent;
             termo = '';
         }
@@ -47,11 +49,14 @@ btLimpar.addEventListener('click', limpeza);
 btResultado.addEventListener('click', () => {
     let termo1 = resultado;
 
-    calcularExpressao();
-    registraCalculoNoHistorico(termo1, termo, operando);
+    if(operando !='' && termo != ''){
+        calcularExpressao();
+        registraCalculoNoHistorico(termo1, termo, operando);
+    }
+    
 
     termo = '';
-    operando = '';
+    //operando = '';
     //console.log(operando);
     //console.log(resultado);
 
@@ -60,12 +65,9 @@ btResultado.addEventListener('click', () => {
 /**
  * função que pega o valor da variável resultado ou o equivalente passado e atribuí ao parágrafo com a classe resultado.
  */
-function exibirResultado(valor) {
-    if (!valor) {
-        document.querySelector('.resultado').innerHTML = resultado;
-    } else {
+function exibirNoVisor(valor = resultado) {
+   
         document.querySelector('.resultado').innerHTML = valor;
-    }
     /*let conteudo = document.querySelector('.resultado').textContent;
     console.log(conteudo);*/
 }
@@ -75,7 +77,7 @@ function exibirResultado(valor) {
  */
 function limpeza() {
     termo = '';
-    exibirResultado(0);
+    exibirNoVisor(0);
     //console.log("limpeza simples");
 }
 
@@ -86,7 +88,7 @@ function limpezaProdunda() {
     termo = '';
     operando = '';
     resultado = 0;
-    exibirResultado();
+    exibirNoVisor();
     //console.log("limpeza profunda");
 }
 
@@ -95,22 +97,22 @@ function limpezaProdunda() {
  */
 function calcularExpressao() {
     switch (operando) {
-        case '+': 
+        case '+':
             resultado += Number(termo);
             resultado = Number(resultado.toFixed(10));//Limitação da quantidade de casas decimais calculadas
             break;
 
-        case '-': 
+        case '-':
             resultado -= Number(termo);
             resultado = Number(resultado.toFixed(10));
             break;
 
-        case '*': 
+        case '*':
             resultado *= Number(termo);
             resultado = Number(resultado.toFixed(10));
             break;
 
-        case '/': 
+        case '/':
             resultado /= Number(termo);
             resultado = Number(resultado.toFixed(10));
             break;
@@ -119,7 +121,7 @@ function calcularExpressao() {
             break;
     }
 
-    exibirResultado(resultado);
+    exibirNoVisor();
 }
 
 /**
@@ -128,7 +130,7 @@ function calcularExpressao() {
  * @param {*} termo2 termo
  * @param {*} operador operando
  */
-function registraCalculoNoHistorico(termo1, termo2, operador){
+function registraCalculoNoHistorico(termo1, termo2, operador) {
     const historico = document.querySelector('.historico');
     const li = document.createElement('li');
 
@@ -137,5 +139,5 @@ function registraCalculoNoHistorico(termo1, termo2, operador){
     historico.insertBefore(li, historico.firstChild);
 }
 
-exibirResultado();
+exibirNoVisor();
 
